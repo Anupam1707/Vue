@@ -3,6 +3,8 @@ import sys
 from time import strftime
 import random
 import requests
+from fetchify import fetch
+from io import BytesIO
 
 # Get a list of file names for all images in the folder
 # background_images = [file for file in os.listdir() if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
@@ -24,7 +26,7 @@ def time():
 
 def change_background():
     # Load the next background image
-    next_image = pygame.image.load(random.choice(background_images))
+    next_image = pygame.image.load(BytesIO(fetch(random.choice(background_images), "vue", image=True)))
     next_image = pygame.transform.scale(next_image, (width + 100, height + 100))
 
     # Fade effect
