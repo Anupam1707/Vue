@@ -10,8 +10,8 @@ from io import BytesIO
 # background_images = [file for file in os.listdir() if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
 
 background_images = [file['name'] for file in requests.get("https://api.github.com/repos/Anupam1707/Vue/contents").json() if file['type'] == 'file']
-background_images.remove("vue.py")
-background_images.remove("README.md")
+# background_images.remove("vue.py")
+# background_images.remove("README.md")
 # background_images.remove("LICENCE")
 
 def time():
@@ -26,29 +26,32 @@ def time():
 
 def change_background():
     # Load the next background image
-    next_image = pygame.image.load(BytesIO(fetch(random.choice(background_images), "vue", image=True)))
-    next_image = pygame.transform.scale(next_image, (width + 100, height + 100))
+    try:
+        next_image = pygame.image.load(BytesIO(fetch(random.choice(background_images), "vue", image=True)))
+        next_image = pygame.transform.scale(next_image, (width + 100, height + 100))
 
-    # Fade effect
-    alpha = 0
-    step = 10
-    while alpha <= 255:
-        next_image.set_alpha(alpha)
-        screen.blit(next_image, (0, 0))
-        time()  # Update the time label
-        pygame.display.flip()
-        pygame.time.delay(20)
-        alpha += step
+        # Fade effect
+        alpha = 0
+        step = 10
+        while alpha <= 255:
+            next_image.set_alpha(alpha)
+            screen.blit(next_image, (0, 0))
+            time()  # Update the time label
+            pygame.display.flip()
+            pygame.time.delay(20)
+            alpha += step
 
-    # Schedule the function to run again after a delay
-    pygame.time.set_timer(pygame.USEREVENT, background_change_interval)
+        # Schedule the function to run again after a delay
+        pygame.time.set_timer(pygame.USEREVENT, background_change_interval)
+    except:
+        pass
 
 # Initialize Pygame
 pygame.init()
 
 # Set up the window
 
-pygame.display.set_caption("Show Mode Time Display")
+pygame.display.set_caption("Vue : Your Personal Screensaver")
 screen_info = pygame.display.Info()
 screen_width = screen_info.current_w
 screen_height = screen_info.current_h
